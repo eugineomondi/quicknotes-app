@@ -71,7 +71,17 @@ form.addEventListener("submit", (event) => {
   const text = noteInput.value.trim();
   const category = noteCategory.value;
 
-  if (!text) return;
+  if (!text) {
+    errorMessage.textContent = "Please type a note first.";
+    return;
+  }
+
+  if (text.length > 200) {
+    errorMessage.textContent = "Notes must be 200 characters or fewer.";
+    return;
+  }
+
+  errorMessage.textContent = "";
 
   notes.push({
     id: Date.now(),
@@ -84,5 +94,12 @@ form.addEventListener("submit", (event) => {
   render();
 });
 
-// ---------- Boot ----------
-render();
+// ---------- Delete note ----------
+notesList.addEventListener("click", (event) => {
+  const btn = event.target.closest(".delete-btn");
+  if (!btn) return;
+
+  const id = Number(btn.dataset.id);
+  notes = notes.filter((note) => note.id !== id);
+  render();
+});
