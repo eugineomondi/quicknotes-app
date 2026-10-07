@@ -108,5 +108,21 @@ notesList.addEventListener("click", (event) => {
   const id = Number(btn.dataset.id);
   notes = notes.filter((note) => note.id !== id);
  notes = loadNotes();
+ // ---------- Clear all (bonus) ----------
+const clearAllBtn = document.createElement("button");
+clearAllBtn.type = "button";
+clearAllBtn.id = "clear-all";
+clearAllBtn.textContent = "Clear all";
+clearAllBtn.style.marginTop = "12px";
+document.querySelector("#notes-section").appendChild(clearAllBtn);
+
+clearAllBtn.addEventListener("click", () => {
+  if (notes.length === 0) return;
+  if (confirm("Delete all notes?")) {
+    notes = [];
+    saveNotes();
+    render();
+  }
+});
 render();
 });
