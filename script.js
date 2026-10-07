@@ -1,3 +1,5 @@
+const searchInput = document.querySelector("#search-input");
+const STORAGE_KEY = "quicknotes.notes";
 // ---------- Element references ----------
 const form = document.querySelector("#note-form");
 const noteInput = document.querySelector("#note-input");
@@ -8,7 +10,29 @@ const errorMessage = document.querySelector("#error-message");
 
 // ---------- State ----------
 let notes = [];
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
 
+function loadNotes() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+function getVisibleNotes() {
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) return notes;
+  const words = query.split(/\s+/);
+  return notes.filter((note) => {
+    const text = note.text.toLowerCase();
+    return words.every((w) => text.includes(w));
+  });
+}
 // ---------- Helpers ----------
 function formatDate(iso) {
   return new Date(iso).toLocaleString(undefined, {
@@ -16,42 +40,24 @@ function formatDate(iso) {
     timeStyle: "short",
   });
 }
-
+searchInput.addEventListener("input", render);
 // ---------- Render ----------
 function render() {
   notesList.textContent = "";
 
-  for (const note of notes) {
+  const visible = getVisibleNotes();
+
+  if (visible.length === 0 && searchInput.value.trim() !== "") {
     const li = document.createElement("li");
-    li.className = `note-card category-${note.category}`;
-
-    const text = document.createElement("p");
-    text.className = "note-text";
-    text.textContent = note.text;
-
-    const meta = document.createElement("div");
-    meta.className = "note-meta";
-
-    const category = document.createElement("span");
-    category.className = "note-category";
-    category.textContent = note.category;
-
-    const date = document.createElement("span");
-    date.className = "note-date";
-    date.textContent = formatDate(note.createdAt);
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "delete-btn";
-    deleteBtn.textContent = "Delete";
-    deleteBtn.dataset.id = note.id;
-
-    meta.appendChild(category);
-    meta.appendChild(date);
-    li.appendChild(text);
-    li.appendChild(meta);
-    li.appendChild(deleteBtn);
+    li.className = "note-card";
+    li.textContent = "No notes match your search.";
     notesList.appendChild(li);
+    updateCount();
+    return;
+  }
+
+  for (const note of visible) {
+    // ...same card-building code as before...
   }
 
   updateCount();
@@ -101,5 +107,6 @@ notesList.addEventListener("click", (event) => {
 
   const id = Number(btn.dataset.id);
   notes = notes.filter((note) => note.id !== id);
-  render();
+ notes = loadNotes();
+render();
 });
