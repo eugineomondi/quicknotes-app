@@ -1,0 +1,219 @@
+/* ---------- Reset & base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f4f6f8;
+}
+
+/* ---------- Header ---------- */
+header {
+  background: #2563eb;
+  color: white;
+  text-align: center;
+  padding: 28px 16px;
+}
+
+header h1 {
+  margin: 0 0 4px;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0;
+  color: #dbeafe;
+}
+
+/* ---------- Main ---------- */
+main {
+  max-width: 700px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+section {
+  background: white;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+/* ---------- Form (Flexbox) ---------- */
+#note-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+#note-form label {
+  flex: 0 0 100%;
+  font-weight: 600;
+  margin-bottom: -6px;
+}
+
+#note-input {
+  flex: 1 1 220px;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+}
+
+#note-category {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+  background: white;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ---------- Error message ---------- */
+#error-message {
+  color: #dc2626;
+  margin: 10px 0 0;
+  min-height: 1.2em;
+}
+
+/* ---------- Search & count ---------- */
+#search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+  margin-bottom: 12px;
+}
+
+#note-count {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+/* ---------- Notes list ---------- */
+#notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.note-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left: 6px solid #9ca3af;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.note-card .note-text {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.note-card .note-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.note-card .note-category {
+  font-weight: 600;
+}
+
+.note-card .delete-btn {
+  background: #ef4444;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.note-card .delete-btn:hover {
+  background: #dc2626;
+}
+
+/* ---------- Category styles ---------- */
+.category-personal {
+  border-left-color: #14b8a6;
+}
+.category-personal .note-category {
+  color: #0f766e;
+}
+
+.category-work {
+  border-left-color: #991b1b;
+}
+.category-work .note-category {
+  color: #991b1b;
+}
+
+.category-study {
+  border-left-color: #2563eb;
+}
+.category-study .note-category {
+  color: #2563eb;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 20px 16px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  header {
+    padding: 20px 12px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  #note-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #note-form label {
+    margin-bottom: 0;
+  }
+
+  #note-input,
+  #note-category,
+  #note-form button {
+    width: 100%;
+  }
+}
